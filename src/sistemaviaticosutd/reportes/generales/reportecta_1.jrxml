@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="baaf0214-49ff-4386-b351-adf050072a1c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/jarteaga/NetBeansProjects/SistemaViaticosUTD/src/sistemaviaticosutd/reportes/generales/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="subreporte" class="JasperReport">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha_ini" class="java.util.Date"/>
+	<parameter name="fecha_fin" class="java.util.Date"/>
+	<parameter name="id_manejo" class="java.lang.Integer"/>
+	<parameter name="otros_costos" class="JasperReport">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="total_cobros" class="JasperReport">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT cta.id_cuenta_cobro, (us.nombre_usuario ||' '|| us.apellido_usuario) AS usuario, us.cedula_usuario, cta.id_manejo_cta,firm.archivo
+
+FROM
+viaticos.cuenta_cobro cta JOIN usuarios.usuarios us ON cta.id_usuario=us.id_usuario
+JOIN usuarios.firmas firm ON firm.id_firmas=us.id_firma
+WHERE cta.cta_aprobada=true
+ORDER BY us.id_usuario ASC]]>
+	</queryString>
+	<field name="id_cuenta_cobro" class="java.lang.Integer"/>
+	<field name="usuario" class="java.lang.String"/>
+	<field name="cedula_usuario" class="java.lang.Long"/>
+	<field name="id_manejo_cta" class="java.lang.Integer"/>
+	<field name="archivo" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="24" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="643ffc90-c445-44f8-a3e8-96265a6eee48" x="1" y="0" width="555" height="24"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="19cc837d-000c-42f3-b7ef-012eb0241d26" x="143" y="0" width="311" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[UNION TEMPORAL DESARROLLO VIAL VALLE DEL CAUCA Y CAUCA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b8897813-cb4c-4e27-8a12-a4c6bd7c2541" x="245" y="12" width="84" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[NIT. 830.059.605-1]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="63" splitType="Immediate">
+			<rectangle>
+				<reportElement uuid="017ea557-7e82-4e46-aa8a-9326b7807b94" x="1" y="0" width="555" height="12"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="796df2f2-c0a4-4c0e-b76c-0ca47dd7755b" x="143" y="0" width="44" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[DEBE A:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="fc6a7f8b-78f3-47c7-989d-0ab04559235b" x="187" y="0" width="182" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="ddfee638-b6b6-4660-bbef-bc1bc4a3315c" x="454" y="0" width="102" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cedula_usuario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5b44ff8d-d98a-43f5-931e-4b8ce1aceec7" x="435" y="0" width="19" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[C.C]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5a58c521-283c-4790-8be4-27b0299d92c4" x="109" y="12" width="315" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[POR CONCEPTO DE: TRANSPORTE ENTRE ESTACIONES DE PEAJE Y/O PESAJE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c47336bf-2ae9-46ea-8116-fdd6b88e20a7" x="0" y="0" width="86" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Cuenta de Cobro N°]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4ec755f0-289a-4f40-97bd-8494f5e589b9" x="86" y="0" width="23" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_cuenta_cobro}]]></textFieldExpression>
+			</textField>
+			<subreport runToBottom="false">
+				<reportElement uuid="dc1b2d98-f224-443e-b77d-68f792874164" x="0" y="24" width="556" height="39"/>
+				<subreportParameter name="fecha_fin">
+					<subreportParameterExpression><![CDATA[$P{fecha_fin}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_manejo">
+					<subreportParameterExpression><![CDATA[$F{id_manejo_cta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fecha_ini">
+					<subreportParameterExpression><![CDATA[$P{fecha_ini}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreporte}]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="020ad25e-c4fa-4eef-b56c-82ef74203c1c" x="109" y="0" width="18" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[-13]]></text>
+			</staticText>
+		</band>
+		<band height="51">
+			<subreport runToBottom="false">
+				<reportElement uuid="a85b436e-ebd3-434c-a141-110399e93811" stretchType="RelativeToTallestObject" x="0" y="12" width="556" height="39"/>
+				<subreportParameter name="id_cta_cobro">
+					<subreportParameterExpression><![CDATA[$F{id_manejo_cta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{otros_costos}]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="5a58c521-283c-4790-8be4-27b0299d92c4" x="245" y="0" width="67" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OTROS COBROS]]></text>
+			</staticText>
+		</band>
+		<band height="14">
+			<elementGroup>
+				<subreport runToBottom="false">
+					<reportElement uuid="d0afa286-40eb-4fe5-9e50-7c993f2396b5" stretchType="RelativeToTallestObject" x="0" y="0" width="555" height="14"/>
+					<subreportParameter name="id_cta_cobro">
+						<subreportParameterExpression><![CDATA[$F{id_manejo_cta}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{total_cobros}]]></subreportExpression>
+				</subreport>
+			</elementGroup>
+		</band>
+		<band height="71">
+			<image>
+				<reportElement uuid="c9f968d3-a2dc-4a1d-94e2-69f7aa6eee66" x="0" y="0" width="159" height="47"/>
+				<imageExpression><![CDATA[JRImageRenderer.getInstance((byte []) $F{archivo})]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="677c21cc-649f-4d83-82bf-39cae476c061" x="0" y="59" width="160" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="46e421c3-c0cd-420b-b4b5-634ad622ff16" x="1" y="47" width="159" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[-------------------------------------------------------]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="12">
+			<textField>
+				<reportElement uuid="b513986b-dc9c-43da-916c-80dca98c5087" x="222" y="0" width="80" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="80bd0317-91b9-447b-a70c-02954dfd3968" x="302" y="0" width="40" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

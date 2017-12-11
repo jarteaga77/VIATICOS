@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="121d8c1a-7b16-4e81-8bf1-312e7bc77856">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_cta_cobro" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT SUM(total) AS sumatotal
+FROM(
+SELECT SUM(des.tarifa_despla)  AS total
+FROM viaticos.cuenta_cobro cta JOIN viaticos.detalle_cuenta_cobro det ON cta.id_manejo_cta=det.id_cuenta_cobro
+JOIN desplazamientos.desplazamiento des ON des.id_desplazamiento=det.id_desplazamiento
+WHERE cta.id_manejo_cta=$P{id_cta_cobro}
+GROUP BY des.tarifa_despla	
+UNION SELECT SUM(co.tarifa)AS total FROM viaticos.otros_cobros co JOIN viaticos.cuenta_cobro cta
+ON cta.id_manejo_cta=co.id_cta_cobro
+WHERE cta.id_manejo_cta=$P{id_cta_cobro}
+GROUP BY co.tarifa
+
+)AS sumatoria]]>
+	</queryString>
+	<field name="sumatotal" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="13" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="fff0a281-561d-4bf2-8029-994bcec9b7d9" x="358" y="0" width="96" height="12"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Cta. Cobro $]]></text>
+			</staticText>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement uuid="1e25536a-2f3e-4582-9f62-f707d26e908d" x="454" y="0" width="101" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sumatotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e68d39b7-cf66-4209-825a-31f6e6b9857d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_cta_otros" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT (us.nombre_usuario ||' '|| us.apellido_usuario) AS usuario,det.fecha,det.concepto,det.novedad, det.tarifa, firm.archivo
+FROM
+viaticos.cuenta_otros_cobros cta JOIN viaticos.otros_cobros det
+ON cta.id_cta_otros=det.id_cta_cobro
+JOIN usuarios.usuarios us ON cta.id_usuario=us.id_usuario
+JOIN usuarios.firmas firm ON firm.id_firmas=us.id_firma
+
+WHERE cta.cta_aprobada=true AND det.id_cta_cobro=$P{id_cta_otros} AND det.fecha between $P{desde} AND  $P{hasta}
+ORDER BY det.fecha,us.id_usuario  ASC]]>
+	</queryString>
+	<field name="usuario" class="java.lang.String"/>
+	<field name="fecha" class="java.sql.Date"/>
+	<field name="concepto" class="java.lang.String"/>
+	<field name="novedad" class="java.lang.String"/>
+	<field name="tarifa" class="java.lang.Integer"/>
+	<field name="archivo" class="java.lang.Object"/>
+	<variable name="total" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{tarifa}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="14" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement uuid="70be5bec-1434-4c9d-9583-4c3f3da0154c" x="0" y="0" width="555" height="14" forecolor="#F3F1F1" backcolor="#CEEDED"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="eb341f26-49d5-46ee-80ca-5e76060c2bc9" x="0" y="0" width="84" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="147e7636-f218-4b2c-a4db-b973247e9b05" x="84" y="0" width="67" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e1dbca22-b721-44ac-b1d2-ccd762d341b0" x="276" y="0" width="138" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Novedad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e5e04251-856e-4305-8ddf-254bf870c643" x="465" y="0" width="39" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tarifa]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="11" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="3e02dd9d-a5ea-465d-98cf-e6aa234ec606" x="0" y="0" width="84" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="c1dc5c8a-b79c-472f-94e5-ea4e3adbf86e" x="84" y="0" width="192" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{concepto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="76c5bb8a-7a5e-465b-be84-689c9ce4a100" x="276" y="0" width="176" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="7" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{novedad}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="aef4a978-09b9-478b-8c76-70603e8c6c9f" x="465" y="0" width="90" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tarifa}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="4ac65514-674f-44fd-828e-3ac5cb6654e9" x="0" y="10" width="555" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<summary>
+		<band height="12" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement uuid="95988919-5303-47e2-aa6a-a831ff1761c2" x="452" y="0" width="100" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="71f41ab9-be1b-4eec-925c-88e7e3cade8c" x="414" y="0" width="38" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total  $]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

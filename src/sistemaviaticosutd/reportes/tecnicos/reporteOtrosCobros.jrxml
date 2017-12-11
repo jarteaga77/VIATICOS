@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="baaf0214-49ff-4386-b351-adf050072a1c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ctanumero" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_manejo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/jarteaga/NetBeansProjects/SistemaViaticosUTD/src/sistemaviaticosutd/reportes/tecnicos/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT cta.id_otros_cobros, (us.nombre_usuario ||' '|| us.apellido_usuario) AS usuario, us.cedula_usuario,
+det.fecha,det.concepto,det.novedad, det.tarifa, firm.archivo,cta.desde,cta.hasta
+FROM
+viaticos.cuenta_otros_cobros cta JOIN viaticos.otros_cobros det
+ON cta.id_cta_otros=det.id_cta_cobro
+JOIN usuarios.usuarios us ON cta.id_usuario=us.id_usuario
+JOIN usuarios.firmas firm ON firm.id_firmas=us.id_firma
+
+WHERE cta.id_otros_cobros=$P{ctanumero} AND cta.id_cta_otros=$P{id_manejo} 
+
+ORDER BY det.fecha, det.id_otros_cobros ASC]]>
+	</queryString>
+	<field name="id_otros_cobros" class="java.lang.Integer"/>
+	<field name="usuario" class="java.lang.String"/>
+	<field name="cedula_usuario" class="java.lang.Long"/>
+	<field name="fecha" class="java.sql.Date"/>
+	<field name="concepto" class="java.lang.String"/>
+	<field name="novedad" class="java.lang.String"/>
+	<field name="tarifa" class="java.lang.Integer"/>
+	<field name="archivo" class="java.lang.Object"/>
+	<field name="desde" class="java.sql.Date"/>
+	<field name="hasta" class="java.sql.Date"/>
+	<variable name="variable1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{tarifa}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="65" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="553bf7f4-9e4d-4275-8cd9-f9121573b630" x="1" y="0" width="554" height="28"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="017ea557-7e82-4e46-aa8a-9326b7807b94" x="1" y="28" width="554" height="24"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="c47336bf-2ae9-46ea-8116-fdd6b88e20a7" x="0" y="28" width="86" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Cuenta de Cobro N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="19cc837d-000c-42f3-b7ef-012eb0241d26" x="143" y="0" width="311" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[UNION TEMPORAL DESARROLLO VIAL VALLE DEL CAUCA Y CAUCA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b8897813-cb4c-4e27-8a12-a4c6bd7c2541" x="242" y="14" width="84" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[NIT. 830.059.605-1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="796df2f2-c0a4-4c0e-b76c-0ca47dd7755b" x="262" y="28" width="44" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[DEBE A:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="fc6a7f8b-78f3-47c7-989d-0ab04559235b" x="306" y="28" width="249" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="ddfee638-b6b6-4660-bbef-bc1bc4a3315c" x="162" y="28" width="100" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cedula_usuario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5a58c521-283c-4790-8be4-27b0299d92c4" x="217" y="52" width="153" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[POR CONCEPTO DE: OTROS GASTOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5b44ff8d-d98a-43f5-931e-4b8ce1aceec7" x="143" y="28" width="19" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[C.C]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="121c6729-5826-4e33-8a74-16f22a8c105b" x="86" y="28" width="19" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_otros_cobros}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yy">
+				<reportElement uuid="a711ecd8-2436-4c92-ab18-fd45d7846f13" x="105" y="28" width="17" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c47336bf-2ae9-46ea-8116-fdd6b88e20a7" x="1" y="40" width="86" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Periodo Facturado:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="7ec65fe6-289f-4cd1-bfea-4cde6ad45778" x="87" y="40" width="100" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{desde}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c47336bf-2ae9-46ea-8116-fdd6b88e20a7" x="187" y="40" width="17" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[A]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="c352f0a1-ef63-4511-a86a-badc648a74d0" x="206" y="40" width="100" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hasta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="12" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement uuid="e1a92036-bd72-4766-b2ad-15fa18b6a69a" x="-1" y="0" width="556" height="12" forecolor="#FFFAFA" backcolor="#D7EBF1"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="f9fb8fc2-8242-48c1-9847-cf2b527498bf" x="0" y="0" width="38" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f3a917a6-abca-44ce-a2d1-27dd786bdec3" x="276" y="0" width="40" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Novedad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="929f72b6-9d1a-4f11-a83f-93e872678db1" x="466" y="0" width="30" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tarifa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="375d12d4-786b-48e5-9ccf-470c00c083d2" x="79" y="0" width="138" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Concepto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="07c57c73-57f3-4ca3-ad07-e852e09862bf" x="276" y="0" width="190" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="7" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{novedad}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="b6e2bf39-8d7a-43bd-8788-6bbeaabef52c" x="1" y="11" width="554" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement uuid="b98ba485-2ea2-4100-a27b-cd6c04440ede" x="466" y="0" width="88" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tarifa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ad169bb5-8abf-4aab-b1b0-6a0854e23d7b" x="69" y="0" width="207" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{concepto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="48741b02-57ff-42fe-87ee-e3fa12328c79" x="1" y="0" width="68" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="74" splitType="Stretch">
+			<textField>
+				<reportElement uuid="ef7ea30d-940d-4ff2-bf95-285ffc71c774" x="-1" y="62" width="157" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement uuid="5ba81a49-2a66-4213-996a-5e6a076eabbd" mode="Opaque" x="1" y="0" width="554" height="12" forecolor="#F5EBEB" backcolor="#D7EBF1"/>
+			</rectangle>
+			<image>
+				<reportElement uuid="b895654f-05bb-4bb1-976a-ac4281440dfb" x="-1" y="12" width="157" height="50"/>
+				<imageExpression><![CDATA[JRImageRenderer.getInstance((byte []) $F{archivo})]]></imageExpression>
+			</image>
+			<textField pattern="#,##0">
+				<reportElement uuid="23401932-8824-4c2c-9d1c-05f7b5c9ac74" x="454" y="0" width="100" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{variable1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="046a69ca-d29f-470d-a98b-fb90181f8485" x="422" y="0" width="32" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total $]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

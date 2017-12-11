@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Consolidado Mes" pageWidth="612" pageHeight="792" columnWidth="540" leftMargin="36" rightMargin="36" topMargin="36" bottomMargin="36" uuid="d18b0b2c-623e-46f3-8cd4-4c11c54d579d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="inicial" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="final" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select nit_usuario,usuario, sum(total_cta) FROM relacion_gastos.detalle_relacion_gastos
+
+WHERE fecha BETWEEN $P{inicial} AND $P{final}
+
+
+GROUP BY nit_usuario,usuario
+
+ORDER BY usuario ASC]]>
+	</queryString>
+	<field name="nit_usuario" class="java.lang.Long"/>
+	<field name="usuario" class="java.lang.String"/>
+	<field name="sum" class="java.lang.Long"/>
+	<variable name="total" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{sum}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="8a0093cd-130a-41d2-97b7-5e1f39c2bad2" x="224" y="40" width="106" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[CONSOLIDADO MES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b8897813-cb4c-4e27-8a12-a4c6bd7c2541" x="236" y="14" width="114" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[NIT. 830.059.605-1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="19cc837d-000c-42f3-b7ef-012eb0241d26" x="137" y="0" width="344" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[UNION TEMPORAL DESARROLLO VIAL VALLE DEL CAUCA Y CAUCA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b8897813-cb4c-4e27-8a12-a4c6bd7c2541" x="0" y="62" width="65" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Periodo desde:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="ab49f5e2-24a8-4188-a3e8-cbbed58fd9ad" x="65" y="62" width="61" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{inicial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b8897813-cb4c-4e27-8a12-a4c6bd7c2541" x="126" y="62" width="40" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Hasta:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="8bb459b1-54a4-4a4f-8dc8-4962b7f07eb2" x="166" y="62" width="100" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{final}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="13" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="2ac94163-6d37-418b-8ec5-885de3659380" x="0" y="0" width="185" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Nit / Cédula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="97e7f2bd-8569-469f-b32c-b77052cd907f" x="224" y="0" width="81" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Apellido Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b9a39c3-e03a-42d1-aba4-463d9109c943" x="463" y="1" width="28" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement uuid="d6938d33-c729-4329-9ad5-4400608e84fc" x="0" y="0" width="185" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nit_usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="154f3afe-fbc6-4169-a07a-7777e2861807" x="224" y="0" width="185" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="33f30c45-3133-40ef-9a2e-204bd9d4f4d0" x="463" y="0" width="61" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="14" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement uuid="d064775a-1a0f-4d29-8470-d99bdbcd9284" x="463" y="0" width="67" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b8897813-cb4c-4e27-8a12-a4c6bd7c2541" x="418" y="0" width="45" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total Mes:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
